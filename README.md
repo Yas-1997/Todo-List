@@ -1,4 +1,4 @@
-# ToDo CLI (in-memory, Python)
+# ToDo List (Python)
 
 ## Run
 ```bash
