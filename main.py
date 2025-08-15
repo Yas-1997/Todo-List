@@ -1,6 +1,8 @@
 import argparse
 from pathlib import Path
 from todo import ToDoManager
+from colorama import Fore, Style
+
 
 DEFAULT_DATA_PATH = Path.home() / ".todo_cli" / "tasks.json"
 
@@ -8,12 +10,13 @@ manager = ToDoManager()
 
 def cmd_add(args):
     t = manager.add_task(args.title)
-    print(f"Added: {t}")
+    print(Fore.GREEN + f"Added: {t}" + Style.RESET_ALL)
+
 
 def cmd_list(args):
     items = manager.list_tasks(show_done=not args.pending)
     if not items:
-        print("No tasks.")
+        print(Fore.BLUE + Style.BRIGHT + f"No tasks." + Style.RESET_ALL)
         return
     for t in items:
         print(repr(t))
@@ -123,7 +126,7 @@ def main():
         # 2) RUN COMMAND
         args.func(args)
     except (KeyError, ValueError) as e:
-        print(f"Error: {e}")
+        print(Fore.RED + Style.BRIGHT + f"Error: {e}" + Style.RESET_ALL)
     finally:
         # 3) SAVE (after every run; safe and simple)
         try:

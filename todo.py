@@ -2,6 +2,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Optional, Iterable, Dict, Any
 from datetime import datetime
+from colorama import init, Fore, Style
+init(autoreset=True)
 
 
 @dataclass
@@ -14,7 +16,11 @@ class Task:
     def __repr__(self) -> str:
         status = "-" if self.done else "•"
         ts = self.created_at.strftime("%Y-%m-%d %H:%M")
-        return f"[{status}] #{self.id} {self.title}  ({ts})"
+        if self.done:
+         color = Fore.LIGHTGREEN_EX + Style.BRIGHT
+        else:
+         color = Fore.YELLOW + Style.BRIGHT
+        return f"{color}[{status}] #{self.id} {self.title}  ({ts}){Style.RESET_ALL}"
 
     # ---helpers ---
     def to_dict(self) -> Dict[str, Any]:
